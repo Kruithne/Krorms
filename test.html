@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Testing page for Krorms!</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="krorms.js"></script>
+		<script>
+			function mySubmitFunction(form)
+			{
+				form.find('input').css('border', '1px solid black');
+			}
+
+			function myCompleteFunction(form)
+			{
+				alert('Complete!');
+			}
+
+			function myErrorFunction(errors)
+			{
+				for (var errorIndex in errors)
+				{
+					var error = errors[errorIndex];
+
+					error[0].css('border', '1px solid red');
+					alert(error[1]);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Testing page for Krorms!</h1>
+		<form class="validatable preventDefault" submit="mySubmitFunction" complete="myCompleteFunction" error="myErrorFunction">
+			<input type="text" id="name" name="Name" minlength="10" maxlength="40"/>
+			<input type="text" id="email" name="E-mail Address" validate="email"/>
+			<textarea id="info" name="Info" minlength="10"></textarea>
+			<select id="picker" range="5-10"></select>
+			<input type="submit" value="Submit!"/>
+		</form>
+	</body>
+</html>

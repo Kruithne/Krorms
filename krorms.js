@@ -45,12 +45,8 @@ $(function()
 				}
 			});
 
-			$(document).on('change', '.validatable select', function()
-			{
-				alert('Update called on select');
-			});
-
-			$('.validatable select').each(function()
+			// Automatically run updateRange on any select elements already around.
+			$('select').each(function()
 			{
 				krorms.updateRange($(this));
 			})

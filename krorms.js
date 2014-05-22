@@ -87,7 +87,7 @@ $(function()
 				{
 					while (i > higher - 1)
 					{
-						$('<option value="' + i + '">' + i + '</option>').appendTo(element);
+						$('<option/>').val(i).html(i).appendTo(element);
 						i--;
 					}
 				}
@@ -95,7 +95,7 @@ $(function()
 				{
 					while (i < higher + 1)
 					{
-						$('<option value="' + i + '">' + i + '</option>').appendTo(element);
+						$('<option/>').val(i).html(i).appendTo(element);
 						i++;
 					}
 				}

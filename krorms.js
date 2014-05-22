@@ -52,6 +52,11 @@ $(function()
 			})
 		},
 
+		parseYear: function(yearString)
+		{
+			return yearString == 'c' ? new Date().getFullYear() : parseInt(yearString);
+		},
+
 		updateRange: function(element)
 		{
 			// Make sure our object is jQuery.
@@ -63,8 +68,8 @@ $(function()
 			if (range != undefined)
 			{
 				var rangeSplit = range.split('-', 2),
-					lower = parseInt(rangeSplit[0]),
-					higher = parseInt(rangeSplit[1]);
+					lower = krorms.parseYear(rangeSplit[0]),
+					higher = krorms.parseYear(rangeSplit[1]);
 
 				var i = lower;
 				if (lower > higher)

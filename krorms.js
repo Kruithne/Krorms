@@ -9,6 +9,9 @@ $(function()
 			invalid_email: '{field} must contain a valid e-mail address.',
 			invalid_number: '{field} must contain a valid number.'
 		},
+		months: [
+			'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+		],
 		errors: [],
 		isFunction: function(functionName)
 		{
@@ -52,9 +55,9 @@ $(function()
 			})
 		},
 
-		parseYear: function(yearString)
+		parseRangeValue: function(valueString)
 		{
-			return yearString == 'c' ? new Date().getFullYear() : parseInt(yearString);
+			return valueString == 'year' ? new Date().getFullYear() : parseInt(valueString);
 		},
 
 		updateRange: function(element)
@@ -67,9 +70,17 @@ $(function()
 
 			if (range != undefined)
 			{
+				// Populate the selector with all the months.
+				if (range == 'months')
+				{
+					for (var monthIndex in krorms.months)
+						$('<option/>').val(monthIndex + 1).html(krorms.months[monthIndex]).appendTo(element);
+					return;
+				}
+
 				var rangeSplit = range.split('-', 2),
-					lower = krorms.parseYear(rangeSplit[0]),
-					higher = krorms.parseYear(rangeSplit[1]);
+					lower = krorms.parseRangeValue(rangeSplit[0]),
+					higher = krorms.parseRangeValue(rangeSplit[1]);
 
 				var i = lower;
 				if (lower > higher)

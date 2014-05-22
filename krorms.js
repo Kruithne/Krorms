@@ -66,18 +66,22 @@ $(function()
 					lower = parseInt(rangeSplit[0]),
 					higher = parseInt(rangeSplit[1]);
 
+				var i = lower;
 				if (lower > higher)
 				{
-					var tempLower = lower;
-					lower = higher;
-					higher = tempLower;
+					while (i > higher - 1)
+					{
+						$('<option value="' + i + '">' + i + '</option>').appendTo(element);
+						i--;
+					}
 				}
-
-				var i = lower;
-				while (i < higher + 1)
+				else
 				{
-					$('<option value="' + i + '">' + i + '</option>').appendTo(element);
-					i++;
+					while (i < higher + 1)
+					{
+						$('<option value="' + i + '">' + i + '</option>').appendTo(element);
+						i++;
+					}
 				}
 			}
 		},

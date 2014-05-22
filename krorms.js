@@ -70,7 +70,7 @@ $(function()
 			selector.empty(); // Remove all existing values.
 			while (currentIndex < days + 1)
 			{
-				$('<option/>').val(currentIndex).html(currentIndex).appendTo(selector);
+				$('<option/>').val(currentIndex + 1).html(currentIndex).appendTo(selector);
 				currentIndex++;
 			}
 		},
@@ -94,7 +94,7 @@ $(function()
 				if (range == 'months')
 				{
 					for (var monthIndex in krorms.months)
-						$('<option/>').val(monthIndex + 1).html(krorms.months[monthIndex]).appendTo(element);
+						$('<option/>').val(parseInt(monthIndex) + 1).html(krorms.months[monthIndex]).appendTo(element);
 					return;
 				}
 

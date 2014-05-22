@@ -55,6 +55,26 @@ $(function()
 			})
 		},
 
+		updateSelectorDays: function(selector)
+		{
+			// Make sure our selector is jQuery
+			if (!selector instanceof jQuery)
+				selector = $(selector);
+
+			var holder = selector.parent(),
+				monthSelector = holder.children('[type=month]').first(),
+				yearSelector = holder.children('[type=year]').first(),
+				days = new Date(yearSelector.val(), monthSelector.val(), 0).getDate(),
+				currentIndex = 1;
+
+			selector.empty(); // Remove all existing values.
+			while (currentIndex < days + 1)
+			{
+				$('<option/>').val(currentIndex).html(currentIndex).appendTo(selector);
+				currentIndex++;
+			}
+		},
+
 		parseRangeValue: function(valueString)
 		{
 			return valueString == 'year' ? new Date().getFullYear() : parseInt(valueString);
@@ -76,6 +96,20 @@ $(function()
 					for (var monthIndex in krorms.months)
 						$('<option/>').val(monthIndex + 1).html(krorms.months[monthIndex]).appendTo(element);
 					return;
+				}
+
+				// Populate the selector with days and keep them updated correctly.
+				if (range == 'days')
+				{
+					var holder = element.parent(),
+						updateFunction = function()
+						{
+							krorms.updateSelectorDays(element);
+						};
+
+					holder.children('[type=month]').first().on('change', updateFunction);
+					holder.children('[type=year]').first().on('change', updateFunction);
+					setTimeout(updateFunction, 1); // Delay by 1ms so the further elements are loaded.
 				}
 
 				var rangeSplit = range.split('-', 2),

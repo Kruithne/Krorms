@@ -45,36 +45,45 @@ $(function()
 				}
 			});
 
-			$('.validatable').each(function()
+			$(document).on('change', '.validatable select', function()
 			{
-				var form = $(this);
-				form.find('select').each(function()
-				{
-					var field = $(this),
-						range = field.attr('range');
+				alert('Update called on select');
+			});
 
-					if (range != undefined)
-					{
-						var rangeSplit = range.split('-', 2),
-							lower = parseInt(rangeSplit[0]),
-							higher = parseInt(rangeSplit[1]);
-
-						if (lower > higher)
-						{
-							var tempLower = lower;
-							lower = higher;
-							higher = tempLower;
-						}
-
-						var i = lower;
-						while (i < higher + 1)
-						{
-							$('<option value="' + i + '">' + i + '</option>').appendTo(field);
-							i++;
-						}
-					}
-				});
+			$('.validatable select').each(function()
+			{
+				krorms.updateRange($(this));
 			})
+		},
+
+		updateRange: function(element)
+		{
+			// Make sure our object is jQuery.
+			if (!element instanceof jQuery)
+				element = $(element);
+
+			var range = element.attr('range');
+
+			if (range != undefined)
+			{
+				var rangeSplit = range.split('-', 2),
+					lower = parseInt(rangeSplit[0]),
+					higher = parseInt(rangeSplit[1]);
+
+				if (lower > higher)
+				{
+					var tempLower = lower;
+					lower = higher;
+					higher = tempLower;
+				}
+
+				var i = lower;
+				while (i < higher + 1)
+				{
+					$('<option value="' + i + '">' + i + '</option>').appendTo(element);
+					i++;
+				}
+			}
 		},
 
 		validate: function(form)

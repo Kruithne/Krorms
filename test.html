@@ -3,7 +3,7 @@
 	<head>
 		<title>Testing page for Krorms!</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="krorms.min.js"></script>
+		<script src="krorms.js"></script>
 		<script>
 			// This function is set as the 'submit' function in the form HTML and will be
 			// called when the form is submit, before validation occurs.
@@ -21,14 +21,16 @@
 
 			//This function is set as the 'error' function in the form HTML and will be
 			// called if the validation of the form fails.
-			function myErrorFunction(errors)
+			function myErrorFunction(error_list)
 			{
-				for (var errorIndex in errors)
+				for (var fieldID in error_list)
 				{
-					var error = errors[errorIndex];
+					var errors = error_list[fieldID];
 
-					error[0].css('border', '1px solid red');
-					alert(error[1]);
+					$('#' + fieldID).css('border', '1px solid red');
+
+					for (var errorIndex in errors)
+						alert(errors[errorIndex]);
 				}
 			}
 		</script>
@@ -36,10 +38,10 @@
 	<body>
 		<h1>Testing page for Krorms!</h1>
 		<form class="validatable preventDefault" submit="mySubmitFunction" complete="myCompleteFunction" error="myErrorFunction">
-			<input type="text" id="name" minlength="10" maxlength="40" required="true"/>
-			<input type="text" id="email" validate="email" required="true"/>
-			<textarea id="info" minlength="10" required="false"></textarea>
-			<input type="text" id="postcode" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}" required="false"/>
+			<input type="text" id="name" minlength="10" maxlength="40" require="true"/>
+			<input type="text" id="email" validate="email" require="true"/>
+			<textarea id="info" minlength="10"></textarea>
+			<input type="text" id="postcode" require="true" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}"/>
 			<select id="picker" range="10-5"></select>
 			<div>
 				<select id="dob_day" range="days"></select>

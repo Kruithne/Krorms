@@ -140,7 +140,7 @@ $(function()
 				krorms.validateField(field);
 			});
 
-			return krorms.errors.length == 0;
+			return Object.size(krorms.errors) == 0;
 		},
 
 		validateField: function(field)
@@ -150,6 +150,7 @@ $(function()
 				fieldValue = field.val(),
 				valueLength = fieldValue.length,
 				required = krorms.isRequired(field);
+
 
 			if (valueLength == 0)
 			{
@@ -198,19 +199,33 @@ $(function()
 			if (!field instanceof jQuery)
 				field = $(field);
 
-			var requiredValue = field.attr('required');
+			var requiredValue = field.attr('require');
 			return requiredValue !== undefined || requiredValue == 'true';
 		},
 
 		error: function(field, error)
 		{
+			var id = field.attr('id')
+
 			// Create a new error array for this field if one does not already exist.
-			if (krorms.errors[field] == undefined)
-				krorms.errors[field] = [];
+			if (krorms.errors[id] == undefined)
+				krorms.errors[id] = [];
 
 			// Push this error onto the array for this field.
-			krorms.errors[field].push(error);
+			krorms.errors[id].push(error);
 		}
 	};
 	krorms.load();
-});
+})
+
+if (Object.size == undefined)
+{
+	Object.size = function(obj)
+	{
+		var size = 0, key;
+		for (key in obj)
+			if (obj.hasOwnProperty(key)) size++;
+
+		return size;
+	};
+}

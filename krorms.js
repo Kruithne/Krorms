@@ -54,6 +54,8 @@ $(function()
 			{
 				krorms.updateRange($(this));
 			})
+
+			window.setKrormsErrorMessage = krorms.setErrorMessage;
 		},
 
 		updateSelectorDays: function(selector)

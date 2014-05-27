@@ -3,7 +3,7 @@
 	<head>
 		<title>Testing page for Krorms!</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="krorms.js"></script>
+		<script src="krorms.min.js"></script>
 		<script>
 			function mySubmitFunction(form)
 			{
@@ -25,6 +25,11 @@
 					alert(error[1]);
 				}
 			}
+
+			$(function()
+			{
+				setKrormsErrorMessage('invalid', 'The {field} field must be valid!');
+			});
 		</script>
 	</head>
 	<body>

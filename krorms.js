@@ -7,7 +7,8 @@ $(function()
 			max_length: '{field} cannot exceed {max} characters.',
 			both_length: '{field} must be between {min}-{max} characters.',
 			invalid_email: '{field} must contain a valid e-mail address.',
-			invalid_number: '{field} must contain a valid number.'
+			invalid_number: '{field} must contain a valid number.',
+			invalid: '{field} must be valid.'
 		},
 		months: [
 			'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
@@ -183,6 +184,11 @@ $(function()
 				{
 					if (fieldValue.match(/^[\d]+$/) == null)
 						krorms.error(field, 'invalid_number', {field: fieldName});
+				}
+				else
+				{
+					if (fieldValue.match(new RegExp(validateType)) == null)
+						krorms.error(field, 'invalid', {field: fieldName});
 				}
 			}
 		},

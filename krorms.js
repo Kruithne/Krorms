@@ -151,7 +151,6 @@ $(function()
 				valueLength = fieldValue.length,
 				required = krorms.isRequired(field);
 
-
 			if (valueLength == 0)
 			{
 				if (required)

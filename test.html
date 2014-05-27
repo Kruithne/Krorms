@@ -5,16 +5,22 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="krorms.min.js"></script>
 		<script>
+			// This function is set as the 'submit' function in the form HTML and will be
+			// called when the form is submit, before validation occurs.
 			function mySubmitFunction(form)
 			{
 				form.find('input').css('border', '1px solid black');
 			}
 
+			// This function is set as the 'complete' function in the form HTML and will
+			// be called when the form is validated successfully.
 			function myCompleteFunction(form)
 			{
 				alert('Complete!');
 			}
 
+			//This function is set as the 'error' function in the form HTML and will be
+			// called if the validation of the form fails.
 			function myErrorFunction(errors)
 			{
 				for (var errorIndex in errors)
@@ -28,6 +34,8 @@
 
 			$(function()
 			{
+				// This allows for custom over-riding of error messages.
+				// The {field} wildcard will be replaced with the name attribute of the field.
 				setKrormsErrorMessage('invalid', 'The {field} field must be valid!');
 			});
 		</script>

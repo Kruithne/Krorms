@@ -44,10 +44,10 @@
 	<body>
 		<h1>Testing page for Krorms!</h1>
 		<form class="validatable preventDefault" submit="mySubmitFunction" complete="myCompleteFunction" error="myErrorFunction">
-			<input type="text" id="name" name="Name" minlength="10" maxlength="40"/>
-			<input type="text" id="email" name="E-mail Address" validate="email"/>
-			<textarea id="info" name="Info" minlength="10"></textarea>
-			<input type="text" name="Postcode" id="postcode" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}"/>
+			<input type="text" id="name" minlength="10" maxlength="40" required="true"/>
+			<input type="text" id="email" validate="email" required="true"/>
+			<textarea id="info" minlength="10" required="false"></textarea>
+			<input type="text" id="postcode" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}" required="false"/>
 			<select id="picker" range="10-5"></select>
 			<div>
 				<select id="dob_day" range="days"></select>

@@ -2,14 +2,6 @@ $(function()
 {
 	var krorms =
 	{
-		errorMessages: {
-			min_length: '{field} must be at least {min} characters.',
-			max_length: '{field} cannot exceed {max} characters.',
-			both_length: '{field} must be between {min}-{max} characters.',
-			invalid_email: '{field} must contain a valid e-mail address.',
-			invalid_number: '{field} must contain a valid number.',
-			invalid: '{field} must be valid.'
-		},
 		months: [
 			'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
 		],
@@ -53,9 +45,7 @@ $(function()
 			$('select').each(function()
 			{
 				krorms.updateRange($(this));
-			})
-
-			window.setKrormsErrorMessage = krorms.setErrorMessage;
+			});
 		},
 
 		updateSelectorDays: function(selector)
@@ -158,20 +148,28 @@ $(function()
 			var minLength = field.attr('minlength'),
 				maxLength = field.attr('maxlength'),
 				fieldValue = field.val(),
-				fieldName = field.attr('name'),
-				valueLength = fieldValue.length;
+				valueLength = fieldValue.length,
+				required = krorms.isRequired(field);
+
+			if (valueLength == 0)
+			{
+				if (required)
+					krorms.error(field, 'required'); // If field is required and it's empty, that's a paddling!
+				else
+					return; // If we're empty and not required, just skip validation.
+			}
 
 			if (minLength != undefined && maxLength != undefined && (valueLength < minLength || valueLength > maxLength))
 			{
-				krorms.error(field, 'both_length', { field: fieldName, min: minLength, max: maxLength} );
+				krorms.error(field, 'both_length');
 			}
 			else
 			{
 				if (minLength != undefined && valueLength < minLength)
-					krorms.error(field, 'min_length', { field: fieldName, min: minLength} );
+					krorms.error(field, 'min_length');
 
 				if (maxLength != undefined && valueLength > maxLength)
-					krorms.error(field, 'max_length', { field: fieldName, max: maxLength} );
+					krorms.error(field, 'max_length');
 			}
 
 			var validateType = field.attr('validate');
@@ -180,39 +178,38 @@ $(function()
 				if (validateType == 'email')
 				{
 					if (fieldValue.match(/^\S+@\S+\.[a-zA-Z]+$/) == null)
-						krorms.error(field, 'invalid_email', {field: fieldName});
+						krorms.error(field, 'invalid_email');
 				}
 				else if (validateType == 'number')
 				{
 					if (fieldValue.match(/^[\d]+$/) == null)
-						krorms.error(field, 'invalid_number', {field: fieldName});
+						krorms.error(field, 'invalid_number');
 				}
 				else
 				{
 					if (fieldValue.match(new RegExp(validateType)) == null)
-						krorms.error(field, 'invalid', {field: fieldName});
+						krorms.error(field, 'invalid');
 				}
 			}
 		},
 
-		error: function(field, error, values)
+		isRequired: function(field)
 		{
-			krorms.errors.push([field, krorms.errorMessage(error, values)]);
+			if (!field instanceof jQuery)
+				field = $(field);
+
+			var requiredValue = field.attr('required');
+			return requiredValue !== undefined || requiredValue == 'true';
 		},
 
-		errorMessage: function(id, replaces)
+		error: function(field, error)
 		{
-			var string = krorms.errorMessages[id];
-			for (var replaceIndex in replaces)
-				string = string.replace(new RegExp('{' + replaceIndex + '}', 'g'), replaces[replaceIndex]);
+			// Create a new error array for this field if one does not already exist.
+			if (krorms.errors[field] == undefined)
+				krorms.errors[field] = [];
 
-			return string;
-		},
-
-		// Set a custom error message in-place of the defaults.
-		setErrorMessage: function(id, message)
-		{
-			krorms.errorMessages[id] = message;
+			// Push this error onto the array for this field.
+			krorms.errors[field].push(error);
 		}
 	};
 	krorms.load();

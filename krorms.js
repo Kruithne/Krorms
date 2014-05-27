@@ -143,7 +143,7 @@ $(function()
 			return krorms.errors.length == 0;
 		},
 
-		validateField: function(field, errors)
+		validateField: function(field)
 		{
 			var minLength = field.attr('minlength'),
 				maxLength = field.attr('maxlength'),

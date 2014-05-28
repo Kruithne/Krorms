@@ -147,7 +147,7 @@ $(function()
 		{
 			var minLength = field.attr('minlength'),
 				maxLength = field.attr('maxlength'),
-				fieldValue = field.val(),
+				fieldValue = field.val().trim(),
 				valueLength = fieldValue.length,
 				required = krorms.isRequired(field);
 

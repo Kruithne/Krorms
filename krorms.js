@@ -82,7 +82,7 @@ $(function()
 			selector.empty(); // Remove all existing values.
 			while (currentIndex < days + 1)
 			{
-				$('<option/>').val(currentIndex + 1).html(currentIndex).appendTo(selector);
+				$('<option/>').val(currentIndex).html(currentIndex).appendTo(selector);
 				currentIndex++;
 			}
 

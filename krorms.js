@@ -46,6 +46,24 @@ $(function()
 			{
 				krorms.updateRange($(this));
 			});
+
+			$('.dateSelector').each(function()
+			{
+				var t = $(this), d = t.attr('date');
+
+				if (d != undefined)
+				{
+					d = d.split('-');
+					var f = function(st, i)
+					{
+						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
+					};
+
+					f('day', 2);
+					f('month', 1);
+					f('year', 0);
+				}
+			});
 		},
 
 		updateSelectorDays: function(selector)

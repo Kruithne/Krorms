@@ -41,10 +41,87 @@ $(function()
 				}
 			});
 
+			$.fn.extend({
+				updateSelectorDays: function()
+				{
+					var holder = this.parent(),
+						oldValue = this.val(),
+						newValue = 1,
+						monthSelector = holder.children('[type=month]').first(),
+						yearSelector = holder.children('[type=year]').first(),
+						days = new Date(yearSelector.val(), monthSelector.val(), 0).getDate(),
+						currentIndex = 1;
+
+					this.empty(); // Remove all existing values.
+					while (currentIndex < days + 1)
+					{
+						$('<option/>').val(currentIndex).html(currentIndex).appendTo(this);
+						if (oldValue != null && currentIndex > newValue && currentIndex <= oldValue)
+							newValue = currentIndex;
+
+						currentIndex++;
+					}
+
+					this.val(newValue);
+				},
+				updateRange: function()
+				{
+					var range = this.attr('range');
+
+					if (range != undefined)
+					{
+						// Populate the selector with all the months.
+						if (range == 'months')
+						{
+							for (var monthIndex in krorms.months)
+								$('<option/>').val(parseInt(monthIndex) + 1).html(krorms.months[monthIndex]).appendTo(this);
+							return;
+						}
+
+						// Populate the selector with days and keep them updated correctly.
+						if (range == 'days')
+						{
+							var holder = this.parent(), element = this, updateFunction = function()
+							{
+								element.updateSelectorDays();
+							}
+
+							holder.children('[type=month]').first().on('change', updateFunction);
+
+							holder.children('[type=year]').first().on('change', updateFunction);
+
+							setTimeout(updateFunction, 1); // Delay by 1ms so the further elements are loaded.
+						}
+
+						var rangeSplit = range.split('-', 2),
+							lower = krorms.parseRangeValue(rangeSplit[0]),
+							higher = krorms.parseRangeValue(rangeSplit[1]);
+
+						var i = lower;
+						if (lower > higher)
+						{
+							while (i > higher - 1)
+							{
+								$('<option/>').val(i).html(i).appendTo(this);
+								i--;
+							}
+						}
+						else
+						{
+							while (i < higher + 1)
+							{
+								$('<option/>').val(i).html(i).appendTo(this);
+								i++;
+							}
+						}
+					}
+				}
+			});
+
 			// Automatically run updateRange on any select elements already around.
 			$('select').each(function()
 			{
-				krorms.updateRange($(this));
+				$(this).updateRange();
 			});
 
 			$('.dateSelector').each(function()
@@ -66,92 +143,9 @@ $(function()
 			});
 		},
 
-		updateSelectorDays: function(selector)
-		{
-			// Make sure our selector is jQuery
-			if (!selector instanceof jQuery)
-				selector = $(selector);
-
-			var holder = selector.parent(),
-				oldValue = selector.val(),
-				newValue = 1,
-				monthSelector = holder.children('[type=month]').first(),
-				yearSelector = holder.children('[type=year]').first(),
-				days = new Date(yearSelector.val(), monthSelector.val(), 0).getDate(),
-				currentIndex = 1;
-
-			selector.empty(); // Remove all existing values.
-			while (currentIndex < days + 1)
-			{
-				$('<option/>').val(currentIndex).html(currentIndex).appendTo(selector);
-				if (oldValue != null && currentIndex > newValue && currentIndex <= oldValue)
-					newValue = currentIndex;
-
-				currentIndex++;
-			}
-
-			selector.val(newValue);
-		},
-
 		parseRangeValue: function(valueString)
 		{
 			return valueString == 'year' ? new Date().getFullYear() : parseInt(valueString);
-		},
-
-		updateRange: function(element)
-		{
-			// Make sure our object is jQuery.
-			if (!element instanceof jQuery)
-				element = $(element);
-
-			var range = element.attr('range');
-
-			if (range != undefined)
-			{
-				// Populate the selector with all the months.
-				if (range == 'months')
-				{
-					for (var monthIndex in krorms.months)
-						$('<option/>').val(parseInt(monthIndex) + 1).html(krorms.months[monthIndex]).appendTo(element);
-					return;
-				}
-
-				// Populate the selector with days and keep them updated correctly.
-				if (range == 'days')
-				{
-					var holder = element.parent(),
-						updateFunction = function()
-						{
-							krorms.updateSelectorDays(element);
-						};
-
-					holder.children('[type=month]').first().on('change', updateFunction);
-					holder.children('[type=year]').first().on('change', updateFunction);
-					setTimeout(updateFunction, 1); // Delay by 1ms so the further elements are loaded.
-				}
-
-				var rangeSplit = range.split('-', 2),
-					lower = krorms.parseRangeValue(rangeSplit[0]),
-					higher = krorms.parseRangeValue(rangeSplit[1]);
-
-				var i = lower;
-				if (lower > higher)
-				{
-					while (i > higher - 1)
-					{
-						$('<option/>').val(i).html(i).appendTo(element);
-						i--;
-					}
-				}
-				else
-				{
-					while (i < higher + 1)
-					{
-						$('<option/>').val(i).html(i).appendTo(element);
-						i++;
-					}
-				}
-			}
 		},
 
 		validate: function(form)

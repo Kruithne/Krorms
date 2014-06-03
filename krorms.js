@@ -115,6 +115,18 @@ $(function()
 							}
 						}
 					}
+				},
+				setDateSelectorValue: function(value)
+				{
+					var t = $(this), d = value.split('-');
+					var f = function(st, i)
+					{
+						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
+					};
+
+					f('day', 2);
+					f('month', 1);
+					f('year', 0);
 				}
 			});
 
@@ -129,17 +141,7 @@ $(function()
 				var t = $(this), d = t.attr('date');
 
 				if (d != undefined)
-				{
-					d = d.split('-');
-					var f = function(st, i)
-					{
-						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
-					};
-
-					f('day', 2);
-					f('month', 1);
-					f('year', 0);
-				}
+					setTimeout(function() {t.setDateSelectorValue(d)}, 2);
 			});
 		},
 

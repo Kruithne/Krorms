@@ -74,6 +74,7 @@ $(function()
 
 			var holder = selector.parent(),
 				oldValue = selector.val(),
+				newValue = 1,
 				monthSelector = holder.children('[type=month]').first(),
 				yearSelector = holder.children('[type=year]').first(),
 				days = new Date(yearSelector.val(), monthSelector.val(), 0).getDate(),
@@ -83,11 +84,13 @@ $(function()
 			while (currentIndex < days + 1)
 			{
 				$('<option/>').val(currentIndex).html(currentIndex).appendTo(selector);
+				if (oldValue != null && currentIndex > newValue && currentIndex <= oldValue)
+					newValue = currentIndex;
+
 				currentIndex++;
 			}
 
-			if (oldValue != null)
-				selector.val(oldValue);
+			selector.val(newValue);
 		},
 
 		parseRangeValue: function(valueString)

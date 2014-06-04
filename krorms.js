@@ -225,7 +225,7 @@ $(function()
 
 		error: function(field, error)
 		{
-			var id = field.attr('id')
+			var id = field.attr('id');
 
 			// Create a new error array for this field if one does not already exist.
 			if (krorms.errors[id] == undefined)

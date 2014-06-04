@@ -61,7 +61,6 @@ $(function()
 
 						currentIndex++;
 					}
-
 					this.val(newValue);
 				},
 				updateRange: function()
@@ -91,6 +90,7 @@ $(function()
 							holder.children('[type=year]').first().on('change', updateFunction);
 
 							setTimeout(updateFunction, 1); // Delay by 1ms so the further elements are loaded.
+							return;
 						}
 
 						var rangeSplit = range.split('-', 2),
@@ -147,7 +147,8 @@ $(function()
 
 		parseRangeValue: function(valueString)
 		{
-			return valueString == 'year' ? new Date().getFullYear() : parseInt(valueString);
+			valueString = valueString.replace('year', new Date().getFullYear());
+			return parseInt(eval(valueString));
 		},
 
 		validate: function(form)

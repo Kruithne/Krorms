@@ -124,9 +124,9 @@ $(function()
 						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
 					};
 
-					f('day', 2);
 					f('month', 1);
 					f('year', 0);
+					f('day', 2);
 				}
 			});
 

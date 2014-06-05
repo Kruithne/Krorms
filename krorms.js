@@ -226,14 +226,7 @@ $(function()
 
 		error: function(field, error)
 		{
-			var id = field.attr('id');
-
-			// Create a new error array for this field if one does not already exist.
-			if (krorms.errors[id] == undefined)
-				krorms.errors[id] = [];
-
-			// Push this error onto the array for this field.
-			krorms.errors[id].push(error);
+			krorms.errors.push([field, error]);
 		}
 	};
 	krorms.load();

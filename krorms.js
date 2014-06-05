@@ -226,7 +226,10 @@ $(function()
 
 		error: function(field, error)
 		{
-			krorms.errors.push([field, error]);
+			krorms.errors.push({
+				field: field,
+				error: error
+			});
 		}
 	};
 	krorms.load();

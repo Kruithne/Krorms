@@ -83,13 +83,11 @@ $(function()
 							var holder = this.parent(), element = this, updateFunction = function()
 							{
 								element.updateSelectorDays();
-							}
+							};
 
 							holder.children('[type=month]').first().on('change', updateFunction);
-
 							holder.children('[type=year]').first().on('change', updateFunction);
 
-							setTimeout(updateFunction, 1); // Delay by 1ms so the further elements are loaded.
 							return;
 						}
 
@@ -114,12 +112,14 @@ $(function()
 								i++;
 							}
 						}
+
+						if (this.attr('type') == 'year')
+							this.parent().children('[type=day]').updateSelectorDays();
 					}
 				},
 				setDateSelectorValue: function(value)
 				{
-					var t = $(this), d = value.split('-');
-					var f = function(st, i)
+					var t = $(this), d = value.split('-'), f = function(st, i)
 					{
 						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
 					};
@@ -141,7 +141,7 @@ $(function()
 				var t = $(this), d = t.attr('date');
 
 				if (d != undefined)
-					setTimeout(function() {t.setDateSelectorValue(d)}, 2);
+					t.setDateSelectorValue(d);
 			});
 		},
 

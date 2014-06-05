@@ -63,6 +63,15 @@ $(function()
 					}
 					this.val(newValue);
 				},
+				getDateSelectorValue: function()
+				{
+					var t = this, getSelector = function(type)
+					{
+						return t.children('[type=' + type + ']').val();
+					};
+
+					return getSelector('year') + '-' + getSelector('month') + '-' + getSelector('day');
+				},
 				updateRange: function()
 				{
 					var range = this.attr('range');

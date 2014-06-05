@@ -23,14 +23,10 @@
 			// called if the validation of the form fails.
 			function myErrorFunction(error_list)
 			{
-				for (var fieldID in error_list)
+				for (var errorIndex in error_list)
 				{
-					var errors = error_list[fieldID];
-
-					$('#' + fieldID).css('border', '1px solid red');
-
-					for (var errorIndex in errors)
-						alert(errors[errorIndex]);
+					var error = error_list[errorIndex];
+					error.field.css('border', '1px solid red');
 				}
 			}
 		</script>

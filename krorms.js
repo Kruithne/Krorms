@@ -65,12 +65,8 @@ $(function()
 				},
 				getDateSelectorValue: function()
 				{
-					var t = this, getSelector = function(type)
-					{
-						return t.children('[type=' + type + ']').val();
-					};
-
-					return getSelector('year') + '-' + getSelector('month') + '-' + getSelector('day');
+					var t = this, h = krorms;
+					return h.getSelectorValue(t, 'year') + '-' + h.getSelectorValue(t, 'month') + '-' + g.getSelectorValue(t, 'day');
 				},
 				updateRange: function()
 				{
@@ -89,13 +85,10 @@ $(function()
 						// Populate the selector with days and keep them updated correctly.
 						if (range == 'days')
 						{
-							var holder = this.parent(), element = this, updateFunction = function()
-							{
-								element.updateSelectorDays();
-							};
+							var holder = this.parent(), element = this;
 
-							holder.children('[type=month]').first().on('change', updateFunction);
-							holder.children('[type=year]').first().on('change', updateFunction);
+							holder.children('[type=month]').first().on('change', element.updateSelectorDays);
+							holder.children('[type=year]').first().on('change', element.updateSelectorDays);
 
 							return;
 						}
@@ -128,14 +121,11 @@ $(function()
 				},
 				setDateSelectorValue: function(value)
 				{
-					var t = $(this), d = value.split('-'), f = function(st, i)
-					{
-						t.find('select[type="' + st + '"]').val(parseInt(d[i]));
-					};
+					var t = $(this), d = value.split('-'), k = krorms;
 
-					f('month', 1);
-					f('year', 0);
-					f('day', 2);
+					k.setSelectorValue(t, 'month', d[1]);
+					k.setSelectorValue(t, 'year', d[0]);
+					k.setSelectorValue(t, 'day', d[2]);
 				}
 			});
 
@@ -152,6 +142,16 @@ $(function()
 				if (d != undefined)
 					t.setDateSelectorValue(d);
 			});
+		},
+
+		setSelectorValue: function(element, type, value)
+		{
+			element.find('select[type="' + type + '"]').val(parseInt(value));
+		},
+
+		getSelectorValue: function(element, type)
+		{
+			return element.children('[type=' + type + ']').val();
 		},
 
 		parseRangeValue: function(valueString)

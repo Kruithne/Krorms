@@ -66,7 +66,7 @@ $(function()
 				getDateSelectorValue: function()
 				{
 					var t = this, h = krorms;
-					return h.getSelectorValue(t, 'year') + '-' + h.getSelectorValue(t, 'month') + '-' + g.getSelectorValue(t, 'day');
+					return h.getSelectorValue(t, 'year') + '-' + h.getSelectorValue(t, 'month') + '-' + h.getSelectorValue(t, 'day');
 				},
 				updateRange: function()
 				{

@@ -87,8 +87,13 @@ $(function()
 						{
 							var holder = this.parent(), element = this;
 
-							holder.children('[type=month]').first().on('change', element.updateSelectorDays);
-							holder.children('[type=year]').first().on('change', element.updateSelectorDays);
+							var func = function()
+							{
+								element.updateSelectorDays();
+							};
+
+							holder.children('[type=month]').first().on('change', func);
+							holder.children('[type=year]').first().on('change', func);
 
 							return;
 						}

@@ -126,7 +126,7 @@ $(function()
 				},
 				setDateSelectorValue: function(v)
 				{
-					var t = $(this), d = value instanceof Date ? [v.getFullYear(), v.getMonth(), v.getDate()] : value.split('-');
+					var t = $(this), d = v instanceof Date ? [v.getFullYear(), v.getMonth(), v.getDate()] : value.split('-');
 
 					krorms.setSelectorValue(t, 'month', d[1]);
 					krorms.setSelectorValue(t, 'year', d[0]);

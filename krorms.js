@@ -145,7 +145,12 @@ $(function()
 				var t = $(this), d = t.attr('date');
 
 				if (d != undefined)
+				{
+					if (d == 'now')
+						d = new Date();
+
 					t.setDateSelectorValue(d);
+				}
 			});
 		},
 

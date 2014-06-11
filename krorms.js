@@ -124,9 +124,9 @@ $(function()
 							this.parent().children('[type=day]').updateSelectorDays();
 					}
 				},
-				setDateSelectorValue: function(value)
+				setDateSelectorValue: function(v)
 				{
-					var t = $(this), d = value instanceof Date ? [d.getFullYear(), d.getMonth(), d.getDate()] : value.split('-');
+					var t = $(this), d = value instanceof Date ? [v.getFullYear(), v.getMonth(), v.getDate()] : value.split('-');
 
 					krorms.setSelectorValue(t, 'month', d[1]);
 					krorms.setSelectorValue(t, 'year', d[0]);

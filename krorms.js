@@ -126,11 +126,11 @@ $(function()
 				},
 				setDateSelectorValue: function(value)
 				{
-					var t = $(this), d = value.split('-'), k = krorms;
+					var t = $(this), d = value instanceof Date ? [d.getFullYear(), d.getMonth(), d.getDate()] : value.split('-');
 
-					k.setSelectorValue(t, 'month', d[1]);
-					k.setSelectorValue(t, 'year', d[0]);
-					k.setSelectorValue(t, 'day', d[2]);
+					krorms.setSelectorValue(t, 'month', d[1]);
+					krorms.setSelectorValue(t, 'year', d[0]);
+					krorms.setSelectorValue(t, 'day', d[2]);
 				}
 			});
 

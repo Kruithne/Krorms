@@ -9,7 +9,7 @@
 			// called when the form is submit, before validation occurs.
 			function mySubmitFunction(form)
 			{
-				form.find('input').css('border', '1px solid black');
+				form.find('input,.dateSelector').css('border', '1px solid black');
 			}
 
 			// This function is set as the 'complete' function in the form HTML and will
@@ -39,7 +39,7 @@
 			<textarea id="info" minlength="10"></textarea>
 			<input type="text" id="postcode" require="true" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}"/>
 			<select id="picker" range="10-5"></select>
-			<div class="dateSelector" date="2015-02-05">
+			<div class="dateSelector" date="2015-02-05" validate=">=">
 				<select id="dob_day" type="day" range="days"></select>
 				<select id="dob_month" type="month" range="months"></select>
 				<select id="dob_year" type="year" range="year-year+10"></select>

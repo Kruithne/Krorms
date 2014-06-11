@@ -170,13 +170,43 @@ $(function()
 			krorms.errors = [];
 
 			// Loop through each field and validate it.
-			form.find('input,textarea').each(function()
+			form.find('input,textarea,.dateSelector').each(function()
 			{
 				var field = $(this);
-				krorms.validateField(field);
+				if (field.hasClass('dateSelector'))
+					krorms.validateDateField(field);
+				else
+					krorms.validateField(field);
 			});
 
 			return Object.size(krorms.errors) == 0;
+		},
+
+		validateDateField: function(field)
+		{
+			var value = field.getDateSelectorValue().split('-'),
+				validate = field.attr('validate');
+
+			if (validate !== undefined)
+			{
+				var date = new Date(value[0], value[1] - 1, value[2]).getTime(),
+					now = new Date(),
+					today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+				console.info(date);
+				console.info(today);
+
+				if (validate.indexOf('=') > -1 && date == today)
+					return;
+
+				if (validate.indexOf('>') > -1 && date > today)
+					return;
+
+				if (validate.indexOf('<') > -1 && date < today)
+					return;
+
+				krorms.error(field, 'invalid_date');
+			}
 		},
 
 		validateField: function(field)

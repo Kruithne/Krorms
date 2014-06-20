@@ -256,6 +256,12 @@ $(function()
 					if (fieldValue.match(/^[\d]+$/) == null)
 						krorms.error(field, 'invalid_number');
 				}
+				else if (validateType == 'password')
+				{
+					var mainField = $(field.attr('field'));
+					if (mainField.length === 0 || mainField.val().trim() !== fieldValue)
+						krorms.error(field, 'password_mismatch');
+				}
 				else
 				{
 					if (fieldValue.match(new RegExp(validateType)) == null)

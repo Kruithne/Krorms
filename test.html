@@ -35,6 +35,8 @@
 		<h1>Testing page for Krorms!</h1>
 		<form class="validatable preventDefault" submit="mySubmitFunction" complete="myCompleteFunction" error="myErrorFunction">
 			<input type="text" id="name" minlength="10" maxlength="40" require="true"/>
+			<input type="password" id="pass" require="true"/>
+			<input type="password" id="pass-confirm" require="true" validate="password" field="pass"/>
 			<input type="text" id="email" validate="email" require="true"/>
 			<textarea id="info" minlength="10"></textarea>
 			<input type="text" id="postcode" require="true" validate="[a-zA-Z0-9]{4}(\s|)[a-zA-Z0-9]{3}"/>

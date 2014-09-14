@@ -12,3 +12,4 @@ It's made primarily for my own personal use on projects but feel free to use it 
 + **invalid_number**: Value of the field was not a valid number.
 + **invalid**: Value of the field did not match the provided regular expression.
 + **required**: The field was required but nothing was entered.
++ **invalid_option_selected**: A selector option was chosen that was marked as noselect.

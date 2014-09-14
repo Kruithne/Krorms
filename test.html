@@ -9,7 +9,7 @@
 			// called when the form is submit, before validation occurs.
 			function mySubmitFunction(form)
 			{
-				form.find('input,.dateSelector').css('border', '1px solid black');
+				form.find('input,.dateSelector,select').css('border', '1px solid black');
 			}
 
 			// This function is set as the 'complete' function in the form HTML and will
@@ -46,6 +46,11 @@
 				<select id="dob_month" type="month" range="months"></select>
 				<select id="dob_year" type="year" range="year-year+10"></select>
 			</div>
+			<select>
+				<option value="-1" noselect="true" selected>Please choose an option...</option>
+				<option value="0">Choose me!</option>
+				<option value="1">Or me!</option>
+			</select>
 			<input type="submit" value="Submit!"/>
 		</form>
 	</body>

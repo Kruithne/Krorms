@@ -175,16 +175,30 @@ $(function()
 			krorms.errors = [];
 
 			// Loop through each field and validate it.
-			form.find('input,textarea,.dateSelector').each(function()
+			form.find('input,textarea,select,.dateSelector').each(function()
 			{
 				var field = $(this);
-				if (field.hasClass('dateSelector'))
-					krorms.validateDateField(field);
+
+				if (field.is('select'))
+				{
+					if (field.hasClass('dateSelector'))
+						krorms.validateDateField(field);
+					else
+						krorms.validateSelector(field);
+				}
 				else
+				{
 					krorms.validateField(field);
+				}
 			});
 
 			return Object.size(krorms.errors) == 0;
+		},
+
+		validateSelector: function(field)
+		{
+			if (field.find(':selected').attr('noselect') == "true")
+				krorms.error(field, 'invalid_option_selected');
 		},
 
 		validateDateField: function(field)
